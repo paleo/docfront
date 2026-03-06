@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { describe, expect, it } from "vitest";
 import { main } from "../src/cli.js";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
@@ -54,8 +54,8 @@ describe("default listing (basic fixture)", () => {
 
   it("shows both tips", () => {
     const { stdout } = run([], fixtures.basic);
-    expect(stdout).toContain("npx docfront --dir");
-    expect(stdout).toContain("npx docfront --read");
+    expect(stdout).toContain("npm run docfront -- --dir");
+    expect(stdout).toContain("npm run docfront -- --read");
   });
 });
 
@@ -178,8 +178,8 @@ describe("empty fixture", () => {
   it("shows no files and no tips", () => {
     const { code, stdout } = run([], fixtures.empty);
     expect(code).toBe(0);
-    expect(stdout).not.toContain("npx docfront --dir");
-    expect(stdout).not.toContain("npx docfront --read");
+    expect(stdout).not.toContain("npm run docfront -- --dir");
+    expect(stdout).not.toContain("npm run docfront -- --read");
   });
 });
 
@@ -199,14 +199,14 @@ describe("nested fixture with --recursive", () => {
 describe("tip conditions", () => {
   it("only files (no subdirs) shows only read tip", () => {
     const { stdout } = run([], fixtures.errors);
-    expect(stdout).not.toContain("npx docfront --dir");
-    expect(stdout).toContain("npx docfront --read");
+    expect(stdout).not.toContain("npm run docfront -- --dir");
+    expect(stdout).toContain("npm run docfront -- --read");
   });
 
   it("only subdirs (no files) shows only dir tip", () => {
     const { stdout } = run([], fixtures.subdirsOnly);
-    expect(stdout).toContain("npx docfront --dir");
-    expect(stdout).not.toContain("npx docfront --read");
+    expect(stdout).toContain("npm run docfront -- --dir");
+    expect(stdout).not.toContain("npm run docfront -- --read");
   });
 });
 

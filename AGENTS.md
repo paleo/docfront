@@ -19,11 +19,9 @@ In commit messages, always prefix the ticket ID with a `#` sign, e.g., `#123`.
 | `npm run check` | Run lint, build, and test checks |
 | `node bin/docfront.mjs [options]` | Run the CLI from local source |
 
-> Use `node bin/docfront.mjs` instead of `npx docfront` when working inside this repo — `npx` may resolve a cached or published version instead of the local code.
-
 ## CLI Reference
 
-All examples below use the local invocation (`node bin/docfront.mjs`). Substitute `npx docfront` for end-user docs.
+All examples below use the local invocation (`node bin/docfront.mjs`).
 
 ```bash
 # List root-level documents

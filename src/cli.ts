@@ -1,4 +1,5 @@
-import { resolve } from "node:path";
+import { existsSync } from "node:fs";
+import { join, resolve } from "node:path";
 import {
   checkAll,
   formatDirectory,
@@ -7,48 +8,6 @@ import {
   readDocFile,
   type FormatResult,
 } from "./formatter.js";
-
-export interface ParsedArgs {
-  dirs: string[];
-  recursive: boolean;
-  read: string[] | undefined;
-  rootDir: string | undefined;
-  check: boolean;
-}
-
-export function parseArgs(argv: string[]): ParsedArgs {
-  const args = argv.slice(2);
-  const dirs: string[] = [];
-  let recursive = false;
-  let read: string[] | undefined;
-  let rootDir: string | undefined;
-  let check = false;
-
-  for (let i = 0; i < args.length; ++i) {
-    if (args[i] === "--dir" && i + 1 < args.length) {
-      dirs.push(args[++i]);
-    } else if (args[i] === "--recursive") {
-      recursive = true;
-    } else if (args[i] === "--check") {
-      check = true;
-    } else if (args[i] === "--read") {
-      read ??= [];
-      while (i + 1 < args.length && !args[i + 1].startsWith("--")) {
-        read.push(args[++i]);
-      }
-    } else if (args[i] === "--rootDir" && i + 1 < args.length) {
-      rootDir = args[++i];
-    }
-  }
-
-  for (let i = 0; i < dirs.length; ++i) {
-    dirs[i] = dirs[i].replace(/\/+$/, "");
-    if (dirs[i] === "docs" || dirs[i].startsWith("docs/"))
-      dirs[i] = dirs[i].slice("docs".length).replace(/^\/+/, "");
-  }
-
-  return { dirs, recursive, read, rootDir, check };
-}
 
 export interface MainOptions {
   argv?: string[];
@@ -104,14 +63,15 @@ export function main(options?: MainOptions): number {
     }
 
     stdout.write(`${allLines.join("\n")}\n`);
+    const pm = detectPackageManager(cwd);
     if (anySubdirs) {
       stdout.write(
-        "Tip: Use `npx docfront --dir topic-a --dir topic-b/sub-topic-c` to list the subdirectories you need.\n",
+        `Tip: Use \`${pm} --dir topic-a --dir topic-b/sub-topic-c\` to list the subdirectories you need.\n`,
       );
     }
     if (anyFiles) {
       stdout.write(
-        "Tip: Use `npx docfront --read docs/topic-a/doc-1.md --read docs/topic-b/doc-2.md` to read the specified files.\n",
+        `Tip: Use \`${pm} --read docs/topic-a/doc-1.md --read docs/topic-b/doc-2.md\` to read the specified files.\n`,
       );
     }
   }
@@ -129,4 +89,62 @@ export function main(options?: MainOptions): number {
   }
 
   return 0;
+}
+
+export interface ParsedArgs {
+  dirs: string[];
+  recursive: boolean;
+  read: string[] | undefined;
+  rootDir: string | undefined;
+  check: boolean;
+}
+
+export function parseArgs(argv: string[]): ParsedArgs {
+  const args = argv.slice(2);
+  const dirs: string[] = [];
+  let recursive = false;
+  let read: string[] | undefined;
+  let rootDir: string | undefined;
+  let check = false;
+
+  for (let i = 0; i < args.length; ++i) {
+    if (args[i] === "--dir" && i + 1 < args.length) {
+      dirs.push(args[++i]);
+    } else if (args[i] === "--recursive") {
+      recursive = true;
+    } else if (args[i] === "--check") {
+      check = true;
+    } else if (args[i] === "--read") {
+      read ??= [];
+      while (i + 1 < args.length && !args[i + 1].startsWith("--")) {
+        read.push(args[++i]);
+      }
+    } else if (args[i] === "--rootDir" && i + 1 < args.length) {
+      rootDir = args[++i];
+    }
+  }
+
+  for (let i = 0; i < dirs.length; ++i) {
+    dirs[i] = dirs[i].replace(/\/+$/, "");
+    if (dirs[i] === "docs" || dirs[i].startsWith("docs/"))
+      dirs[i] = dirs[i].slice("docs".length).replace(/^\/+/, "");
+  }
+
+  return { dirs, recursive, read, rootDir, check };
+}
+
+function detectPackageManager(cwd: string): string {
+  if (existsSync(join(cwd, "package-lock.json"))) {
+    return "npm run docfront --";
+  }
+  if (existsSync(join(cwd, "pnpm-lock.yaml"))) {
+    return "pnpm dlx docfront";
+  }
+  if (existsSync(join(cwd, "yarn.lock"))) {
+    return "yarn dlx docfront";
+  }
+  if (existsSync(join(cwd, "bun.lockb")) || existsSync(join(cwd, "bun.lock"))) {
+    return "bunx docfront";
+  }
+  return "npx docfront";
 }

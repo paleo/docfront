@@ -68,26 +68,26 @@ read_when:
 
 ```bash
 # List root-level documents
-npx docfront
+npm run docfront
 
 # List a subdirectory
-npx docfront --dir topic-a
+npm run docfront -- --dir topic-a
 
 # List multiple subdirectories
-npx docfront --dir topic-a --dir topic-b
+npm run docfront -- --dir topic-a --dir topic-b
 
 # List everything recursively
-npx docfront --recursive
+npm run docfront -- --recursive
 
 # Read one or more documents (frontmatter stripped)
-npx docfront --read docs/topic-a/doc-1.md
-npx docfront --read docs/topic-a/doc-1.md --read docs/topic-b/doc-2.md
+npm run docfront -- --read docs/topic-a/doc-1.md
+npm run docfront -- --read docs/topic-a/doc-1.md --read docs/topic-b/doc-2.md
 
 # Use a custom docs root instead of docs/
-npx docfront --rootDir path/to/docs
+npm run docfront -- --rootDir path/to/docs
 
 # Validate all files (names, frontmatter)
-npx docfront --check
+npm run docfront -- --check
 ```
 
 ### Options
