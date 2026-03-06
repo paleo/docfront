@@ -1,6 +1,6 @@
 {
   "name": "docfront",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "description": "A lightweight documentation system for AI agents and humans.",
   "keywords": [
@@ -27,7 +27,8 @@
     "lint": "biome check .",
     "lint:fix": "biome check . --write",
     "check": "npm run lint && npm run build && npm run test",
-    "docfront": "node bin/docfront.mjs"
+    "docfront": "node bin/docfront.mjs",
+    "prepublishOnly": "npm run check"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.6",

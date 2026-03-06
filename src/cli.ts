@@ -19,7 +19,6 @@ export interface MainOptions {
 export function main(options?: MainOptions): number {
   const argv = options?.argv ?? process.argv;
   const stdout = options?.stdout ?? process.stdout;
-  const _stderr = options?.stderr ?? process.stderr;
   const cwd = options?.cwd ?? process.cwd();
 
   const { dirs, recursive, read, rootDir, check } = parseArgs(argv);
@@ -138,13 +137,13 @@ function detectPackageManager(cwd: string): string {
     return "npm run docfront --";
   }
   if (existsSync(join(cwd, "pnpm-lock.yaml"))) {
-    return "pnpm dlx docfront";
+    return "pnpm docfront";
   }
   if (existsSync(join(cwd, "yarn.lock"))) {
-    return "yarn dlx docfront";
+    return "yarn docfront";
   }
   if (existsSync(join(cwd, "bun.lockb")) || existsSync(join(cwd, "bun.lock"))) {
-    return "bunx docfront";
+    return "bun run docfront";
   }
   return "npx docfront";
 }

@@ -30,8 +30,11 @@ Set **SKILLS_DIR** to the chosen directory.
 ## Phase 2 — Explore
 
 1. List all directories in SKILLS_DIR.
-2. For each skill directory, read `SKILL.md` and note any reference files it mentions.
-3. Read all referenced files too.
+2. For each skill directory, list its contents recursively to discover all files (do **not** read any file yet).
+   - References are typically in a `references/` subdirectory or as sibling `.md` files alongside `SKILL.md`.
+3. Read only the **frontmatter** of each `SKILL.md` (i.e. the opening lines up to the closing `---`). The `name` and `description` fields are sufficient to classify each skill.
+
+**Do not read the body of `SKILL.md` or any reference files.** The filesystem listing reveals all candidate files; content will be handled one file at a time during migration.
 
 ## Phase 3 — Discuss
 
@@ -58,13 +61,18 @@ Present both the classification and the proposed layout together. Ask clarifying
 
 ## Phase 4 — Migrate
 
-For each skill being converted to documentation:
+**Core principle**: Always **move and rename** files first, then **edit** them in place. Never read a file's full content just to reproduce it in a new file — this wastes context and risks altering markdown syntax.
 
-1. Create the target file in `docs/` with YAML frontmatter (`title`, `summary`, `read_when`) and content.
-   - Strip old skill frontmatter. Rewrite content if needed for clarity.
-   - Reference files become standalone documents in the appropriate subdirectory, each with their own frontmatter.
-   - **Important**: Prefer moving files (using `mv`) over reproducing their content, since markdown syntax can be altered during reproduction.
-2. After **all** files for a skill are created, remove the original skill directory.
+Process each skill being converted to documentation as follows:
+
+1. **Move and rename** every file to its target path in `docs/` using `mv`.
+   - `SKILL.md` and each reference file both become standalone documents with their own frontmatter.
+   - Apply the naming rules (lowercase with dashes) in the `mv` command itself.
+2. **Edit** each moved file in place to:
+   - Add or replace YAML frontmatter (`title`, `summary`, `read_when`).
+   - Strip old skill-specific frontmatter.
+   - Make any targeted content edits needed for clarity.
+3. After **all** files for a skill have been moved and edited, remove the (now empty) original skill directory.
 
 ## Phase 5 — Update Project Configuration
 
