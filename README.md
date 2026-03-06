@@ -100,10 +100,11 @@ npm run docfront -- --check
 | `--check` | Validate all files and directories. Reports name and frontmatter issues. |
 | `--rootDir <path>` | Use a custom directory as the docs root instead of `docs/`. |
 
-## Setup a local development environment
+## Contribute / Setup a local development environment
 
 ```sh
 cp .vscode/settings.example.json .vscode/settings.json
+mkdir .plans
 
 npm i
 npm run build
