@@ -14,7 +14,7 @@ All project documentation lives in the `docs/` directory. The `docfront` CLI let
 
 ## Browsing with CLI
 
-> Run commands via the project's package manager (e.g. `pnpm docfront`, `npm run docfront --`). See [Installing Docfront](references/installation.md) for the full table.
+> Run commands via the project's package manager (e.g. `npm run docfront --`, `pnpm docfront`).
 
 ```bash
 docfront                                          # list root docs
