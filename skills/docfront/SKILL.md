@@ -44,7 +44,7 @@ docfront --check                                  # validate all files
 - Uppercase is allowed by the CLI (e.g. `RELEASING.md`).
 - Names must be **shell-safe**: no spaces, no quotes, no special characters. The CLI validates this for both files and directories. Use `docfront --check` to verify.
 - Use `.md` (Markdown) for all documents.
-- Use short, descriptive names — prefer `debug-locally.md` over `how-to-debug-the-local-development-server.md`.
+- Use short, descriptive names.
 - Group related documents into subdirectories. Subdirectories can be nested.
 
 ## YAML Frontmatter
