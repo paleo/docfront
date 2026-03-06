@@ -58,20 +58,6 @@ Present both the classification and the proposed layout together. Ask clarifying
 
 ## Phase 4 — Migrate
 
-If `docs/README.md` does not already exist, create it with:
-
-```markdown
-# Project Documentation
-
-Internal project documentation. Each `.md` file has a YAML frontmatter with:
-
-- **title**: Display name
-- **summary**: One-line description
-- **read_when**: List of hints for when to read this document
-
-Run `docfront` to browse, or `docfront --recursive` to see everything.
-```
-
 For each skill being converted to documentation:
 
 1. Create the target file in `docs/` with YAML frontmatter (`title`, `summary`, `read_when`) and content.
