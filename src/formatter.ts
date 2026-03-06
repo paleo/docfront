@@ -42,7 +42,7 @@ export function listDirectory(dirPath: string): DirectoryListing {
   for (const entry of entries) {
     if (entry.isDirectory()) {
       subdirs.push(entry.name);
-    } else if (entry.name.endsWith(".md")) {
+    } else if (entry.name.endsWith(".md") && !shouldSkipFile(entry.name)) {
       mdFiles.push(entry.name);
     }
   }
@@ -208,7 +208,7 @@ export function collectAllFiles(dirPath: string, prefix: string): string[] {
     const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
     if (entry.isDirectory()) {
       result.push(...collectAllFiles(join(dirPath, entry.name), rel));
-    } else if (entry.name.endsWith(".md")) {
+    } else if (entry.name.endsWith(".md") && !shouldSkipFile(entry.name)) {
       result.push(rel);
     }
   }
@@ -237,7 +237,7 @@ export function checkAll(dirPath: string, relDir: string): CheckIssue[] {
       if (nameWarning) issues.push({ path: rel, message: nameWarning });
       const subRel = relDir ? `${relDir}/${entry.name}` : entry.name;
       issues.push(...checkAll(join(dirPath, entry.name), subRel));
-    } else if (entry.name.endsWith(".md")) {
+    } else if (entry.name.endsWith(".md") && !shouldSkipFile(entry.name)) {
       if (nameWarning) issues.push({ path: rel, message: nameWarning });
       const content = readFileSync(join(dirPath, entry.name), "utf-8");
       const { error } = extractMetadata(content);
@@ -246,4 +246,8 @@ export function checkAll(dirPath: string, relDir: string): CheckIssue[] {
   }
 
   return issues;
+}
+
+function shouldSkipFile(name: string): boolean {
+  return name.startsWith("CHANGELOG");
 }

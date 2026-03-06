@@ -260,3 +260,20 @@ describe("--check", () => {
     expect(stdout).not.toContain("Missing 'summary'");
   });
 });
+
+describe("CHANGELOG file exclusion", () => {
+  it("does not list CHANGELOG.md in default listing", () => {
+    const { stdout } = run([], fixtures.basic);
+    expect(stdout).not.toContain("CHANGELOG");
+  });
+
+  it("does not list CHANGELOG.md in recursive listing", () => {
+    const { stdout } = run(["--recursive"], fixtures.basic);
+    expect(stdout).not.toContain("CHANGELOG");
+  });
+
+  it("does not surface CHANGELOG.md in --check", () => {
+    const { stdout } = run(["--check"], fixtures.basic);
+    expect(stdout).not.toContain("CHANGELOG");
+  });
+});
