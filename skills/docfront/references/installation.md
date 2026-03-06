@@ -64,7 +64,7 @@ ALWAYS consider using both the **documentation** and the **skills** before anyth
 **Documentation**: Run `npm run docfront` to browse available project documentation in `docs/`. Then list the subdirectories you need (`npm run docfront -- --dir topic-a --dir topic-b/sub-topic-c`) or list everything (`npm run docfront -- --recursive`).
 ```
 
-Also, mention our available instructions:
+When done, output the following block **verbatim** as your final message to the user — do not paraphrase or omit it:
 
 > **Instructions available:**
 >
