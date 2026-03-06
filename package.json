@@ -1,0 +1,38 @@
+{
+  "name": "docfront",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "A lightweight documentation system for AI agents and humans.",
+  "keywords": [
+    "documentation",
+    "ai",
+    "agent",
+    "markdown"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paleo/docfront.git"
+  },
+  "type": "module",
+  "bin": {
+    "docfront": "./bin/docfront.mjs"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --write",
+    "check": "npm run lint && npm run build && npm run test",
+    "docfront": "node bin/docfront.mjs"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.6",
+    "@types/node": "^24.1.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

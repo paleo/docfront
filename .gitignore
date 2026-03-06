@@ -1,0 +1,10 @@
+.local
+
+.plans/*
+!.plans/.gitkeep
+
+node_modules
+dist
+
+.vscode/*
+!.vscode/settings.example.json

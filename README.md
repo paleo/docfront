@@ -1,0 +1,115 @@
+# Docfront
+
+A lightweight documentation system for AI agents and humans. Keep project docs in a `docs/` folder with YAML frontmatter, browse and read them from the terminal.
+
+_Inspired by the [OpenClaw](https://github.com/openclaw/openclaw/) docs system, which uses [Mintlify](https://www.mintlify.com/). This project doesn't depend on Mintlify._
+
+## Installation using our Agent Skill
+
+For installation, our agent skill will help:
+
+```bash
+npx skills add https://github.com/paleo/docfront/tree/main/skills/docfront
+```
+
+Then, ask your agent to do its magic:
+
+```text
+Use your `docfront` skill. Install docfront in this project.
+```
+
+## Installation (manual)
+
+Note: Without the skill, you'll need to explain to your agent how docfront works in your `AGENTS.md` or `CLAUDE.md`.
+
+```bash
+npm install --save-dev docfront
+```
+
+Or just use `npx docfront` directly.
+
+### In your `package.json` (optional)
+
+```json
+{
+  "scripts": {
+    "docfront": "docfront"
+  }
+}
+```
+
+## How It Works
+
+1. Uses a `docs/` directory at your project root.
+2. All files and directories are preferably named in **kebab-case**.
+3. Every `.md` file starts with YAML frontmatter:
+
+```markdown
+---
+title: Your Title Here
+summary: A one-sentence description of what this document covers.
+read_when:
+  - first situation when this document is useful
+  - second situation
+---
+
+# Your Title Here
+
+...
+```
+
+| Field | Required | Description |
+| --- | --- | --- |
+| `title` | Yes | Display name shown in listings. |
+| `summary` | Recommended | One-sentence description. |
+| `read_when` | Recommended | When to consult this document. |
+
+## CLI
+
+```bash
+# List root-level documents
+npx docfront
+
+# List a subdirectory
+npx docfront --dir topic-a
+
+# List multiple subdirectories
+npx docfront --dir topic-a --dir topic-b
+
+# List everything recursively
+npx docfront --recursive
+
+# Read one or more documents (frontmatter stripped)
+npx docfront --read docs/topic-a/doc-1.md
+npx docfront --read docs/topic-a/doc-1.md --read docs/topic-b/doc-2.md
+
+# Use a custom docs root instead of docs/
+npx docfront --rootDir path/to/docs
+
+# Validate all files (names, frontmatter)
+npx docfront --check
+```
+
+### Options
+
+| Option | Description |
+| --- | --- |
+| `--dir <subdir>` | List documents in a subdirectory. Repeatable. |
+| `--recursive` | Walk the entire tree. Combinable with `--dir`. |
+| `--read <file>` | Print document contents (frontmatter stripped). Repeatable. |
+| `--check` | Validate all files and directories. Reports name and frontmatter issues. |
+| `--rootDir <path>` | Use a custom directory as the docs root instead of `docs/`. |
+
+## Setup a local development environment
+
+```sh
+cp .vscode/settings.example.json .vscode/settings.json
+
+npm i
+npm run build
+npm test
+```
+
+## License
+
+MIT

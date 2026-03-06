@@ -1,0 +1,132 @@
+import { resolve } from "node:path";
+import {
+  checkAll,
+  formatDirectory,
+  formatRecursive,
+  listDirectory,
+  readDocFile,
+  type FormatResult,
+} from "./formatter.js";
+
+export interface ParsedArgs {
+  dirs: string[];
+  recursive: boolean;
+  read: string[] | undefined;
+  rootDir: string | undefined;
+  check: boolean;
+}
+
+export function parseArgs(argv: string[]): ParsedArgs {
+  const args = argv.slice(2);
+  const dirs: string[] = [];
+  let recursive = false;
+  let read: string[] | undefined;
+  let rootDir: string | undefined;
+  let check = false;
+
+  for (let i = 0; i < args.length; ++i) {
+    if (args[i] === "--dir" && i + 1 < args.length) {
+      dirs.push(args[++i]);
+    } else if (args[i] === "--recursive") {
+      recursive = true;
+    } else if (args[i] === "--check") {
+      check = true;
+    } else if (args[i] === "--read") {
+      read ??= [];
+      while (i + 1 < args.length && !args[i + 1].startsWith("--")) {
+        read.push(args[++i]);
+      }
+    } else if (args[i] === "--rootDir" && i + 1 < args.length) {
+      rootDir = args[++i];
+    }
+  }
+
+  for (let i = 0; i < dirs.length; ++i) {
+    dirs[i] = dirs[i].replace(/\/+$/, "");
+    if (dirs[i] === "docs" || dirs[i].startsWith("docs/"))
+      dirs[i] = dirs[i].slice("docs".length).replace(/^\/+/, "");
+  }
+
+  return { dirs, recursive, read, rootDir, check };
+}
+
+export interface MainOptions {
+  argv?: string[];
+  stdout?: { write(s: string): void };
+  stderr?: { write(s: string): void };
+  cwd?: string;
+}
+
+export function main(options?: MainOptions): number {
+  const argv = options?.argv ?? process.argv;
+  const stdout = options?.stdout ?? process.stdout;
+  const _stderr = options?.stderr ?? process.stderr;
+  const cwd = options?.cwd ?? process.cwd();
+
+  const { dirs, recursive, read, rootDir, check } = parseArgs(argv);
+
+  const baseDir = rootDir ? resolve(cwd, rootDir) : resolve(cwd, "docs");
+
+  if (check) {
+    const issues = checkAll(baseDir, "");
+    for (const issue of issues) {
+      stdout.write(`${issue.path}: ${issue.message}\n`);
+    }
+    return issues.length > 0 ? 1 : 0;
+  }
+
+  const needsListing = dirs.length > 0 || recursive || !read;
+
+  if (needsListing) {
+    const targets =
+      dirs.length > 0
+        ? dirs.map((dir) => ({
+            targetDir: resolve(baseDir, dir),
+            rootTitle: `${dir}/`,
+            rootRelDir: dir,
+          }))
+        : [{ targetDir: baseDir, rootTitle: "Documentation", rootRelDir: "" }];
+
+    const allLines: string[] = [];
+    let anySubdirs = false;
+    let anyFiles = false;
+    for (const { targetDir, rootTitle, rootRelDir } of targets) {
+      let formatted: FormatResult;
+      if (!recursive) {
+        const result = listDirectory(targetDir);
+        formatted = formatDirectory(targetDir, rootTitle, result, rootRelDir);
+      } else {
+        formatted = formatRecursive(targetDir, rootTitle, 1, rootRelDir);
+      }
+      allLines.push(...formatted.lines);
+      if (formatted.hasSubdirs) anySubdirs = true;
+      if (formatted.hasFiles) anyFiles = true;
+    }
+
+    stdout.write(`${allLines.join("\n")}\n`);
+    if (anySubdirs) {
+      stdout.write(
+        "Tip: Use `npx docfront --dir topic-a --dir topic-b/sub-topic-c` to list the subdirectories you need.\n",
+      );
+    }
+    if (anyFiles) {
+      stdout.write(
+        "Tip: Use `npx docfront --read docs/topic-a/doc-1.md --read docs/topic-b/doc-2.md` to read the specified files.\n",
+      );
+    }
+  }
+
+  if (read) {
+    if (needsListing) stdout.write("\n");
+    const results = read.map((fileArg) => readDocFile(baseDir, fileArg));
+    const output = results
+      .map(
+        ({ path, content }) =>
+          `<document_file path="${path}">\n${content.trimEnd()}\n</document_file>`,
+      )
+      .join("\n\n");
+    stdout.write(`${output}\n`);
+  }
+
+  return 0;
+}
