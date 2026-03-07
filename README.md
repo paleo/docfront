@@ -17,7 +17,7 @@ npx skills add paleo/docfront --skill docfront
 Then, ask your agent to do its magic:
 
 ```text
-Use your `docfront` skill. Install docfront CLI in this project.
+Use your docfront skill. Install docfront CLI in this project.
 ```
 
 > **Note:** We recommend installing the docfront skill globally so it's easier to update. The skill itself will install the npm package locally in your project for faster execution.
