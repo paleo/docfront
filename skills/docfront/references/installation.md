@@ -69,6 +69,7 @@ When done, output the following block **verbatim** as your final message to the 
 > **Instructions available:**
 >
 > - **Bootstrap a `docs/` directory** — if the project has no `docs/` yet, ask the agent to create one. It will analyse the codebase, propose a document layout, and write the files.
+> - **Migrate existing docs** — if the project already has a `docs/` directory, ask the agent to bring it in line with docfront conventions (kebab-case filenames, frontmatter fields, etc.).
 > - **Migrate existing skills to `docs/`** — if the project already stores internal knowledge as agent skills, ask the agent to move that content into `docs/`.
 >
 > Just ask your agent and it will be done.
