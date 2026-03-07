@@ -132,14 +132,14 @@ export function formatFileBullets(files: FileEntry[], relDir: string): string[] 
 
   for (const file of files) {
     const docPath = relDir ? `docs/${relDir}/${file.name}` : `docs/${file.name}`;
-    let firstLine = `- \`${docPath}\``;
-    if (file.title) firstLine += ` — ${file.title}`;
-    if (file.summary) firstLine += ` — ${file.summary}`;
-    lines.push(firstLine);
+    let line = `- \`${docPath}\``;
+    if (file.title) line += ` — ${file.title}`;
+    if (file.summary) line += ` — ${file.summary}`;
+    if (file.readWhen.length > 0) line += ` *(${file.readWhen.join("; ")})*`;
+    lines.push(line);
 
     if (file.nameError) lines.push(`  ⚠ ${file.nameError}`);
     if (file.error) lines.push(`  ⚠ ${file.error}`);
-    if (file.readWhen.length > 0) lines.push(`  *(${file.readWhen.join("; ")})*`);
   }
 
   return lines;
