@@ -30,11 +30,10 @@ Set **SKILLS_DIR** to the chosen directory.
 ## Phase 2 — Explore
 
 1. List all directories in SKILLS_DIR.
-2. For each skill directory, list its contents recursively to discover all files (do **not** read any file yet).
-   - References are typically in a `references/` subdirectory or as sibling `.md` files alongside `SKILL.md`.
+2. For each skill directory, list its contents **recursively** to discover every file in every skill. Do **not** read any file yet.
 3. Read only the **frontmatter** of each `SKILL.md` (i.e. the opening lines up to the closing `---`). The `name` and `description` fields are sufficient to classify each skill.
 
-**Do not read the body of `SKILL.md` or any reference files.** The filesystem listing reveals all candidate files; content will be handled one file at a time during migration.
+Present the full file tree to the user so they can see what exists before any decisions are made.
 
 ## Phase 3 — Discuss
 
@@ -57,22 +56,28 @@ Rules for the layout:
 - Reference files from skills become standalone documents with their own frontmatter.
 - Propose subdirectories based on content domains (e.g., `docs/backend/`, `docs/frontend/`).
 
-Present both the classification and the proposed layout together. Ask clarifying questions. Let the user reshape the plan before proceeding.
+Present both the classification and the proposed `docs/` hierarchy together. Ask clarifying questions. Let the user reshape the plan before proceeding.
+
+### Create Directory Structure
+
+Once the user approves the layout, create the entire hierarchy of subdirectories in `docs/` (empty directories, no files yet). This ensures the target structure is in place before any migration work begins.
 
 ## Phase 4 — Migrate
 
-**Core principle**: Always **move and rename** files first, then **edit** them in place. Never read a file's full content just to reproduce it in a new file — this wastes context and risks altering markdown syntax.
+Delegate the conversion work using subagents (the Task tool), **one instance per skill**, running in parallel. Each subagent:
 
-Process each skill being converted to documentation as follows:
+1. **Reads the skill entirely** — `SKILL.md` and all reference files.
+2. **Decides on the approach** — depending on complexity:
+   - **Move and edit**: Move files to their target paths in `docs/`, rename to kebab-case, then edit in place to add/replace YAML frontmatter and make content edits.
+   - **Rewrite**: When the source is too tangled to edit cleanly, write the target file(s) from scratch.
+3. **Adds proper frontmatter** to every target file (`title`, `summary`, `read_when`).
+4. **Deletes the original skill directory** after all its files have been migrated.
 
-1. **Move and rename** every file to its target path in `docs/` using `mv`.
-   - `SKILL.md` and each reference file both become standalone documents with their own frontmatter.
-   - Apply the naming rules (lowercase with dashes) in the `mv` command itself.
-2. **Edit** each moved file in place to:
-   - Add or replace YAML frontmatter (`title`, `summary`, `read_when`).
-   - Strip old skill-specific frontmatter.
-   - Make any targeted content edits needed for clarity.
-3. After **all** files for a skill have been moved and edited, remove the (now empty) original skill directory.
+The main agent must provide each subagent with:
+
+- The skill directory path and its file listing
+- The target path(s) in `docs/` (from the approved layout)
+- The docfront frontmatter conventions
 
 ## Phase 5 — Update Project Configuration
 

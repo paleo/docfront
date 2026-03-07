@@ -51,3 +51,9 @@ node bin/docfront.mjs --rootDir path/to/docs
 | `--recursive` | Walk the entire tree. Combinable with `--dir`. |
 | `--read <file>` | Print document contents (frontmatter stripped). Repeatable. Cannot combine with `--dir` or `--recursive`. |
 | `--rootDir <path>` | Use a custom directory as the docs root instead of `docs/`. |
+
+## Documentation
+
+Read our architecture: `docs/architecture.md`.
+
+If you need to work on our skill, then read first the Agent Skills specification here: https://agentskills.io/specification.md

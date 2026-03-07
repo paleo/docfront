@@ -2,14 +2,16 @@
 
 A lightweight documentation system for AI agents and humans. Keep project docs in a `docs/` folder with YAML frontmatter, browse and read them from the terminal.
 
+Docfront is both an **npm package** (the CLI that lists, reads, and validates docs) and an **agent skill** (conventions and workflows that teach AI agents how to write, organize, and migrate documentation). You need both: the package provides the tooling, the skill provides the knowledge.
+
 _Inspired by the [OpenClaw](https://github.com/openclaw/openclaw/) docs system, which uses [Mintlify](https://www.mintlify.com/). This project doesn't depend on Mintlify._
 
 ## Installation using our Agent Skill
 
-For installation, our agent skill will help:
+For installation, our skill will help. Install it (I recommend globally):
 
 ```bash
-npx skills add https://github.com/paleo/docfront/tree/main/skills/docfront
+npx skills add paleo/docfront --skill docfront
 ```
 
 Then, ask your agent to do its magic:
@@ -20,7 +22,7 @@ Use your `docfront` skill. Install docfront in this project.
 
 ## Installation (manual)
 
-Note: Without the skill, you'll need to explain to your agent how docfront works in your `AGENTS.md` or `CLAUDE.md`.
+Note: Without the skill, you'll need to explain to your agent how docfront works.
 
 ```bash
 npm install --save-dev docfront

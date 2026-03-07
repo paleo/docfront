@@ -79,4 +79,5 @@ Start your content here…
 
 - [Installing Docfront](references/installation.md) — how to add docfront to a project.
 - [Bootstrapping a docs/ Directory](references/bootstrapping-docs.md) — instructions for creating a `docs/` directory from scratch by exploring the project structure.
+- [Migrate Existing Documents](references/migrate-existing-docs) — guide for bringing an existing folder of Markdown documents into docfront conventions (naming, frontmatter).
 - [Migrate Skills to Docfront Documentation](references/migrate-skills-to-docfront) — guide for moving internal project documentation from agent skills into `docs/`.

@@ -13,6 +13,7 @@
     "type": "git",
     "url": "https://github.com/paleo/docfront.git"
   },
+  "packageManager": "npm@11.11.0",
   "type": "module",
   "bin": {
     "docfront": "./bin/docfront.mjs"

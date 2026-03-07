@@ -32,7 +32,7 @@ Present findings and the proposed doc layout:
 
 ## 4. Write the Documents
 
-Follow `SKILL.md` conventions:
+Follow docfront conventions:
 
 - Use kebab-case file names, shell-safe.
 - Start each file with YAML frontmatter (`title`, optionally `summary` and `read_when`).
