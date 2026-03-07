@@ -6,9 +6,9 @@ Docfront is both an **npm package** (the CLI that lists, reads, and validates do
 
 _Inspired by the [OpenClaw](https://github.com/openclaw/openclaw/) docs system, which uses [Mintlify](https://www.mintlify.com/). This project doesn't depend on Mintlify._
 
-## Installation using our Agent Skill
+## Installation
 
-For installation, our skill will help. Install it (I recommend globally):
+Start by installing the skill:
 
 ```bash
 npx skills add paleo/docfront --skill docfront
@@ -19,6 +19,8 @@ Then, ask your agent to do its magic:
 ```text
 Use your `docfront` skill. Install docfront in this project.
 ```
+
+> **Note:** We recommend installing the docfront skill globally so it's easier to update. The skill itself will install the npm package locally in your project for faster execution.
 
 ## How It Works
 
@@ -82,7 +84,7 @@ npx docfront --check
 | `--check` | Validate all files and directories. Reports name and frontmatter issues. |
 | `--root <path>` | Use a custom directory as the docs root instead of `docs/`. |
 
-## Contribute / Setup a local development environment
+## Contribute / Set up a local development environment
 
 ```sh
 cp .vscode/settings.example.json .vscode/settings.json
