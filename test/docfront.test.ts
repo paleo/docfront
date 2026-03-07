@@ -18,7 +18,7 @@ function run(args: string[], fixtureDir: string) {
   const stdout: string[] = [];
   const stderr: string[] = [];
   const code = main({
-    argv: ["node", "docfront", "--rootDir", fixtureDir, ...args],
+    argv: ["node", "docfront", "--root", fixtureDir, ...args],
     stdout: {
       write: (s) => {
         stdout.push(s);

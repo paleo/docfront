@@ -134,12 +134,12 @@ export function formatFileBullets(files: FileEntry[], relDir: string): string[] 
     const docPath = relDir ? `docs/${relDir}/${file.name}` : `docs/${file.name}`;
     let firstLine = `- \`${docPath}\``;
     if (file.title) firstLine += ` — ${file.title}`;
+    if (file.summary) firstLine += ` — ${file.summary}`;
     lines.push(firstLine);
 
     if (file.nameError) lines.push(`  ⚠ ${file.nameError}`);
     if (file.error) lines.push(`  ⚠ ${file.error}`);
-    if (file.summary) lines.push(`  **Summary:** ${file.summary}`);
-    if (file.readWhen.length > 0) lines.push(`  **Read when:** ${file.readWhen.join("; ")}`);
+    if (file.readWhen.length > 0) lines.push(`  *(${file.readWhen.join("; ")})*`);
   }
 
   return lines;

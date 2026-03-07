@@ -21,9 +21,9 @@ export function main(options?: MainOptions): number {
   const stdout = options?.stdout ?? process.stdout;
   const cwd = options?.cwd ?? process.cwd();
 
-  const { dirs, recursive, read, rootDir, check } = parseArgs(argv);
+  const { dirs, recursive, read, root, check } = parseArgs(argv);
 
-  const baseDir = rootDir ? resolve(cwd, rootDir) : resolve(cwd, "docs");
+  const baseDir = root ? resolve(cwd, root) : resolve(cwd, "docs");
 
   if (check) {
     const issues = checkAll(baseDir, "");
@@ -94,7 +94,7 @@ export interface ParsedArgs {
   dirs: string[];
   recursive: boolean;
   read: string[] | undefined;
-  rootDir: string | undefined;
+  root: string | undefined;
   check: boolean;
 }
 
@@ -103,7 +103,7 @@ export function parseArgs(argv: string[]): ParsedArgs {
   const dirs: string[] = [];
   let recursive = false;
   let read: string[] | undefined;
-  let rootDir: string | undefined;
+  let root: string | undefined;
   let check = false;
 
   for (let i = 0; i < args.length; ++i) {
@@ -118,8 +118,8 @@ export function parseArgs(argv: string[]): ParsedArgs {
       while (i + 1 < args.length && !args[i + 1].startsWith("--")) {
         read.push(args[++i]);
       }
-    } else if (args[i] === "--rootDir" && i + 1 < args.length) {
-      rootDir = args[++i];
+    } else if (args[i] === "--root" && i + 1 < args.length) {
+      root = args[++i];
     }
   }
 
@@ -129,7 +129,7 @@ export function parseArgs(argv: string[]): ParsedArgs {
       dirs[i] = dirs[i].slice("docs".length).replace(/^\/+/, "");
   }
 
-  return { dirs, recursive, read, rootDir, check };
+  return { dirs, recursive, read, root, check };
 }
 
 function detectPackageManager(cwd: string): string {

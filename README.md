@@ -66,7 +66,7 @@ npx docfront --read docs/topic-a/doc-1.md
 npx docfront --read docs/topic-a/doc-1.md --read docs/topic-b/doc-2.md
 
 # Use a custom docs root instead of docs/
-npx docfront --rootDir path/to/docs
+npx docfront --root path/to/docs
 
 # Validate all files (names, frontmatter)
 npx docfront --check
@@ -80,7 +80,7 @@ npx docfront --check
 | `--recursive` | Walk the entire tree. Combinable with `--dir`. |
 | `--read <file>` | Print document contents (frontmatter stripped). Repeatable. |
 | `--check` | Validate all files and directories. Reports name and frontmatter issues. |
-| `--rootDir <path>` | Use a custom directory as the docs root instead of `docs/`. |
+| `--root <path>` | Use a custom directory as the docs root instead of `docs/`. |
 
 ## Contribute / Setup a local development environment
 

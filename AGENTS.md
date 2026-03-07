@@ -40,7 +40,7 @@ node bin/docfront.mjs --recursive --dir topic-a --dir topic-b
 node bin/docfront.mjs --read docs/topic-a/doc-1.md --read docs/topic-b/doc-2.md
 
 # Use a custom docs root instead of docs/
-node bin/docfront.mjs --rootDir path/to/docs
+node bin/docfront.mjs --root path/to/docs
 ```
 
 ### Options
@@ -50,7 +50,7 @@ node bin/docfront.mjs --rootDir path/to/docs
 | `--dir <subdir>` | List documents in a subdirectory. Repeatable. |
 | `--recursive` | Walk the entire tree. Combinable with `--dir`. |
 | `--read <file>` | Print document contents (frontmatter stripped). Repeatable. Cannot combine with `--dir` or `--recursive`. |
-| `--rootDir <path>` | Use a custom directory as the docs root instead of `docs/`. |
+| `--root <path>` | Use a custom directory as the docs root instead of `docs/`. |
 
 ## Documentation
 

@@ -28,8 +28,8 @@ Entry point: `bin/docfront.mjs` → imports `dist/cli.js` → calls `main()` →
 
 `main()` in `src/cli.ts` drives everything:
 
-1. **Parse args** — `parseArgs()` extracts `--dir`, `--recursive`, `--read`, `--rootDir`, `--check` from `argv`. The `--dir` values are normalized (trailing slashes stripped, `docs/` prefix removed).
-2. **Resolve base directory** — `--rootDir` or default `docs/` relative to `cwd`.
+1. **Parse args** — `parseArgs()` extracts `--dir`, `--recursive`, `--read`, `--root`, `--check` from `argv`. The `--dir` values are normalized (trailing slashes stripped, `docs/` prefix removed).
+2. **Resolve base directory** — `--root` or default `docs/` relative to `cwd`.
 3. **Branch by mode:**
    - `--check` → `checkAll()` validates every file and directory name (shell-safe regex) and every `.md` frontmatter. Returns exit code 1 if any issues.
    - Listing (default, `--dir`, `--recursive`) → `listDirectory()` or `formatRecursive()` produce markdown output with headings, bullets, summaries, and `read_when` hints.
@@ -77,7 +77,7 @@ Warnings (⚠) appear inline for name issues or frontmatter errors.
 | `npm run lint` | Biome linter |
 | `npm run check` | lint + build + test |
 
-Tests live in `test/docfront.test.ts` and use fixture directories under `test/fixtures/` (basic, errors, empty, nested, bad-names, subdirs-only). Each fixture is a self-contained `docs/`-like tree passed via `--rootDir`.
+Tests live in `test/docfront.test.ts` and use fixture directories under `test/fixtures/` (basic, errors, empty, nested, bad-names, subdirs-only). Each fixture is a self-contained `docs/`-like tree passed via `--root`.
 
 ## Agent Skill
 
