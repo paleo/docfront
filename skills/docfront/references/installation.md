@@ -57,11 +57,11 @@ If the project has an `AGENTS.md` (or equivalent top-level agent instructions fi
 > **Note**: Adapt the commands to the project's package manager (see the table in step 3).
 
 ```markdown
-## Discover and Read Documentation
+## Seek Documentation and Skills
 
-ALWAYS consider using both the **documentation** and the **skills** before anything else.
+**Before any investigation or code exploration**, run `npm run docfront` to list the documentation index. This is mandatory for every task — do not skip it. Browse relevant subdirectories (`npm run docfront -- --dir topic-a --dir topic-b/sub-topic-c`) or list everything (`npm run docfront -- --recursive`) to check for existing documentation that may inform your work.
 
-**Documentation**: Run `npm run docfront` to browse available project documentation in `docs/`. Then list the subdirectories you need (`npm run docfront -- --dir topic-a --dir topic-b/sub-topic-c`) or list everything (`npm run docfront -- --recursive`).
+ALWAYS check for available **skills** and use them before doing anything else.
 ```
 
 When done, output the following block **verbatim** as your final message to the user — do not paraphrase or omit it:
