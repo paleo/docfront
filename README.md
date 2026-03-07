@@ -20,26 +20,6 @@ Then, ask your agent to do its magic:
 Use your `docfront` skill. Install docfront in this project.
 ```
 
-## Installation (manual)
-
-Note: Without the skill, you'll need to explain to your agent how docfront works.
-
-```bash
-npm install --save-dev docfront
-```
-
-Or just use `npx docfront` directly.
-
-### In your `package.json` (optional)
-
-```json
-{
-  "scripts": {
-    "docfront": "docfront"
-  }
-}
-```
-
 ## How It Works
 
 1. Uses a `docs/` directory at your project root.
@@ -70,26 +50,26 @@ read_when:
 
 ```bash
 # List root-level documents
-npm run docfront
+npx docfront
 
 # List a subdirectory
-npm run docfront -- --dir topic-a
+npx docfront --dir topic-a
 
 # List multiple subdirectories
-npm run docfront -- --dir topic-a --dir topic-b
+npx docfront --dir topic-a --dir topic-b
 
 # List everything recursively
-npm run docfront -- --recursive
+npx docfront --recursive
 
 # Read one or more documents (frontmatter stripped)
-npm run docfront -- --read docs/topic-a/doc-1.md
-npm run docfront -- --read docs/topic-a/doc-1.md --read docs/topic-b/doc-2.md
+npx docfront --read docs/topic-a/doc-1.md
+npx docfront --read docs/topic-a/doc-1.md --read docs/topic-b/doc-2.md
 
 # Use a custom docs root instead of docs/
-npm run docfront -- --rootDir path/to/docs
+npx docfront --rootDir path/to/docs
 
 # Validate all files (names, frontmatter)
-npm run docfront -- --check
+npx docfront --check
 ```
 
 ### Options
