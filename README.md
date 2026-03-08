@@ -67,11 +67,11 @@ npx docfront --recursive
 npx docfront --read docs/topic-a/doc-1.md
 npx docfront --read docs/topic-a/doc-1.md --read docs/topic-b/doc-2.md
 
-# Use a custom docs root instead of docs/
-npx docfront --root path/to/docs
-
 # Validate all files (names, frontmatter)
 npx docfront --check
+
+# Use a custom docs root instead of docs/
+npx docfront --root path/to/docs
 ```
 
 ### Options
