@@ -14,15 +14,13 @@ Start by installing the skill:
 npx skills add paleo/docfront --skill docfront
 ```
 
-> **Note:** We recommend installing the docfront skill locally in each project.
+> **Note:** We recommend installing the docfront skill locally in each project. When you run the next step, the agent will also install the npm package as a dev dependency for faster execution.
 
-Then, ask your agent to do its magic:
+Ask your agent to do its magic:
 
 ```text
 Use your docfront skill. Install docfront CLI in this project.
 ```
-
-> **Note:** The skill will install the npm package as a dev dependency for faster execution.
 
 ## How It Works
 
