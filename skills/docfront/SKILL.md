@@ -4,7 +4,7 @@ description: "Conventions for writing, organizing, and browsing documentation in
 license: CC0 1.0
 metadata:
   author: Paleo
-  version: "0.2.1"
+  version: "0.2.2"
   repository: https://github.com/paleo/docfront
 ---
 
@@ -77,7 +77,7 @@ Start your content here…
 
 ## References
 
-- [Installing Docfront](references/installation.md) — how to add docfront CLI to a project.
+- [Installing Docfront CLI](references/installation.md) — how to add docfront CLI to a project.
 - [Bootstrapping a docs/ Directory](references/bootstrapping-docs.md) — instructions for creating a `docs/` directory from scratch by exploring the project structure.
 - [Migrate Existing Documents](references/migrate-existing-docs) — guide for bringing an existing folder of Markdown documents into docfront conventions (naming, frontmatter).
 - [Migrate Skills to Docfront Documentation](references/migrate-skills-to-docfront) — guide for moving internal project documentation from agent skills into `docs/`.
