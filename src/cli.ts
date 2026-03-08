@@ -46,7 +46,7 @@ export function main(options?: MainOptions): number {
         : [{ targetDir: baseDir, rootTitle: "Documentation", rootRelDir: "" }];
 
     const allLines: string[] = [];
-    let anySubdirs = false;
+    let anySubdirList = false;
     let anyFiles = false;
     for (const { targetDir, rootTitle, rootRelDir } of targets) {
       let formatted: FormatResult;
@@ -57,13 +57,13 @@ export function main(options?: MainOptions): number {
         formatted = formatRecursive(targetDir, rootTitle, 1, rootRelDir);
       }
       allLines.push(...formatted.lines);
-      if (formatted.hasSubdirs) anySubdirs = true;
+      if (formatted.hasSubdirList) anySubdirList = true;
       if (formatted.hasFiles) anyFiles = true;
     }
 
     stdout.write(`${allLines.join("\n")}\n`);
     const pm = detectPackageManager(cwd);
-    if (anySubdirs) {
+    if (anySubdirList) {
       stdout.write(
         `Tip: Use \`${pm} --dir topic-a --dir topic-b/sub-topic-c\` to list the subdirectories you need.\n`,
       );

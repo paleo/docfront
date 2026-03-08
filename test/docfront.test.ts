@@ -208,6 +208,16 @@ describe("tip conditions", () => {
     expect(stdout).toContain("npm run docfront -- --dir");
     expect(stdout).not.toContain("npm run docfront -- --read");
   });
+
+  it("--recursive does not show dir tip even when subdirs exist", () => {
+    const { stdout } = run(["--recursive"], fixtures.basic);
+    expect(stdout).not.toContain("--dir");
+  });
+
+  it("--recursive shows read tip when files exist", () => {
+    const { stdout } = run(["--recursive"], fixtures.basic);
+    expect(stdout).toContain("npm run docfront -- --read");
+  });
 });
 
 describe("name validation", () => {

@@ -24,7 +24,7 @@ export interface DirectoryListing {
 
 export interface FormatResult {
   lines: string[];
-  hasSubdirs: boolean;
+  hasSubdirList: boolean;
   hasFiles: boolean;
 }
 
@@ -76,7 +76,6 @@ export function formatRecursive(
   const result = listDirectory(dirPath);
   const hashes = "#".repeat(level);
   const titleDisplay = title.includes("/") ? `\`${title}\`` : title;
-  let hasSubdirs = result.subdirs.length > 0;
   let hasFiles = result.files.length > 0;
 
   lines.push(`${hashes} ${titleDisplay}`);
@@ -93,11 +92,10 @@ export function formatRecursive(
     if (warning) lines.push(`⚠ ${warning}: ${sub}/`);
     const subResult = formatRecursive(join(dirPath, sub), `${sub}/`, level + 1, subRelDir);
     lines.push(...subResult.lines);
-    if (subResult.hasSubdirs) hasSubdirs = true;
     if (subResult.hasFiles) hasFiles = true;
   }
 
-  return { lines, hasSubdirs, hasFiles };
+  return { lines, hasSubdirList: false, hasFiles };
 }
 
 export function formatDirectory(
@@ -124,7 +122,7 @@ export function formatDirectory(
     lines.push("");
   }
 
-  return { lines, hasSubdirs: result.subdirs.length > 0, hasFiles: result.files.length > 0 };
+  return { lines, hasSubdirList: result.subdirs.length > 0, hasFiles: result.files.length > 0 };
 }
 
 export function formatFileBullets(files: FileEntry[], relDir: string): string[] {

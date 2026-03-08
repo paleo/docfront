@@ -1,6 +1,6 @@
 {
   "name": "docfront",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "license": "MIT",
   "description": "A lightweight documentation system for AI agents and humans.",
   "keywords": [
