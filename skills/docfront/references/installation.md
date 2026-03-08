@@ -18,18 +18,7 @@ Otherwise, check in order:
 
 If neither is found, fall back to **npm**.
 
-## 2. Install
-
-Install docfront as a dev dependency using the detected package manager:
-
-| Package Manager | Command |
-| --- | --- |
-| npm | `npm install -D docfront` |
-| pnpm | `pnpm add -D docfront` |
-| yarn | `yarn add -D docfront` |
-| bun | `bun add -D docfront` |
-
-## 3. Add a Script
+## 2. Add a Script
 
 In the root `package.json`, add a `docfront` script (all package managers support this):
 
@@ -41,7 +30,20 @@ In the root `package.json`, add a `docfront` script (all package managers suppor
 }
 ```
 
-Then run it using the project's script runner:
+## 3. Install
+
+Install docfront as a dev dependency using the detected package manager:
+
+| Package Manager | Command |
+| --- | --- |
+| npm | `npm install -D docfront` |
+| pnpm | `pnpm add -D docfront` |
+| yarn | `yarn add -D docfront` |
+| bun | `bun add -D docfront` |
+
+## 4. Add to `AGENTS.md`
+
+If the project has an `AGENTS.md` (or equivalent top-level agent instructions file like `CLAUDE.md`), we want to add a section. Replace the `npm run` commands with the correct form for the project's package manager:
 
 | Package Manager | Run script | Run with args |
 | --- | --- | --- |
@@ -50,16 +52,12 @@ Then run it using the project's script runner:
 | yarn | `yarn docfront` | `yarn docfront --recursive` |
 | bun | `bun run docfront` | `bun run docfront --recursive` |
 
-## 4. Add to `AGENTS.md`
-
-If the project has an `AGENTS.md` (or equivalent top-level agent instructions file like `CLAUDE.md`), add the following section.
-
-> **Note**: Adapt the commands to the project's package manager (see the table in step 3).
+Section to add:
 
 ```markdown
 ## Seek Documentation and Skills
 
-**Before any investigation or code exploration**, run `npm run docfront` to list the documentation index. This is mandatory for every task — do not skip it. Browse relevant subdirectories (`npm run docfront -- --dir topic-a --dir topic-b/sub-topic-c`) or list everything (`npm run docfront -- --recursive`) to check for existing documentation.
+**Before any investigation or code exploration**, run `npm run docfront` to list the documentation index. This is mandatory for every task — do not skip it. Browse relevant subdirectories (`npm run docfront -- --dir topic-a --dir topic-b/sub-topic-c`) or list everything (`npm run docfront -- --recursive`).
 
 ALWAYS check for available **skills** and use them before doing anything else.
 ```
