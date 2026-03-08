@@ -30,8 +30,9 @@ Set **SKILLS_DIR** to the chosen directory.
 ## Phase 2 — Explore
 
 1. List all directories in SKILLS_DIR.
-2. For each skill directory, list its contents **recursively** to discover every file in every skill. Do **not** read any file yet.
-3. Read only the **frontmatter** of each `SKILL.md` (i.e. the opening lines up to the closing `---`). The `name` and `description` fields are sufficient to classify each skill.
+2. For each skill directory, list its contents **recursively** to discover every file in every skill.
+
+**Do not read any file.** Directory and file names are sufficient to classify each skill and propose a `docs/` layout. The full content will be read later by subagents during the migration phase. Reading files here wastes context and duplicates work.
 
 Present the full file tree to the user so they can see what exists before any decisions are made.
 
@@ -64,16 +65,18 @@ Once the user approves the layout, create the entire hierarchy of subdirectories
 
 ## Phase 4 — Migrate
 
+**Important:** You must **not** read any skill file content before delegating. Only the subagents read the files.
+
 Delegate the conversion work using subagents (the Task tool), **one instance per skill**, running in parallel. Each subagent:
 
-1. **Reads the skill entirely** — `SKILL.md` and all reference files.
+1. **Reads the skill entirely** — `SKILL.md` and all reference files. This is the first time any skill content is read.
 2. **Decides on the approach** — depending on complexity:
    - **Move and edit**: Move files to their target paths in `docs/`, rename to kebab-case, then edit in place to add/replace YAML frontmatter and make content edits.
    - **Rewrite**: When the source is too tangled to edit cleanly, write the target file(s) from scratch.
 3. **Adds proper frontmatter** to every target file (`title`, `summary`, `read_when`).
 4. **Deletes the original skill directory** after all its files have been migrated.
 
-The main agent must provide each subagent with:
+You must provide each subagent with:
 
 - The skill directory path and its file listing
 - The target path(s) in `docs/` (from the approved layout)
