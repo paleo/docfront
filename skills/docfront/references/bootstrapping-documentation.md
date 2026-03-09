@@ -1,18 +1,19 @@
-# Bootstrapping a docs/ Directory
+# Bootstrapping Documentation
 
-A reference for creating a `docs/` directory in a project that has none.
+A reference for creating or extending project documentation by exploring the codebase.
 
 ## 1. Analyze the Codebase
 
 Investigate the project to discover essential knowledge:
 
+- Check if a `docs/` directory already exists. If it does, read its contents to understand what is already documented and identify gaps.
 - Look for existing agent instructions, READMEs, architecture docs, and inline documentation.
 - Read key source files to understand the project structure, patterns, and conventions.
 - Identify areas where documentation would save time for newcomers.
 
 ## 2. Identify Document Candidates
 
-Group related knowledge into potential documents. Common types:
+Group related knowledge into potential documents. If docs already exist, focus on gaps and missing topics. Common types:
 
 - **Architecture** — system overview, key abstractions, data flow.
 - **Code style** — formatting, naming, patterns specific to the project.
@@ -32,7 +33,7 @@ Present findings and the proposed doc layout:
 
 ## 4. Write the Documents
 
-Follow docfront conventions:
+Create the `docs/` directory if it does not already exist. Follow docfront conventions:
 
 - Use kebab-case file names, shell-safe.
 - Start each file with YAML frontmatter (`title`, optionally `summary` and `read_when`).

@@ -41,7 +41,15 @@ Install docfront as a dev dependency using the detected package manager:
 | yarn | `yarn add -D docfront` |
 | bun | `bun add -D docfront` |
 
-## 4. Add to `AGENTS.md`
+## 4. Ensure a `docs/` Directory Exists
+
+If the project does not already have a `docs/` directory, create one:
+
+```bash
+mkdir docs
+```
+
+## 5. Add to `AGENTS.md`
 
 If the project has an `AGENTS.md` (or equivalent top-level agent instructions file like `CLAUDE.md`), we want to add a section. Replace the `npm run` commands with the correct form for the project's package manager:
 
@@ -66,8 +74,8 @@ When done, output the following block **verbatim** as your final message to the 
 
 > **Instructions available:**
 >
-> - **Bootstrap a `docs/` directory** — if the project has no `docs/` yet, ask the agent to create one. It will analyse the codebase, propose a document layout, and write the files.
-> - **Migrate existing docs** — if the project already has a `docs/` directory, ask the agent to bring it in line with docfront conventions (kebab-case filenames, frontmatter fields, etc.).
-> - **Migrate existing skills to `docs/`** — if the project already stores internal knowledge as agent skills, ask the agent to move that content into `docs/`.
+> - **Bootstrap the documentation** — the agent will analyse the codebase, propose a document layout, and write the files.
+> - **Migrate existing docs** — if the project already has documentation, the agent will bring it in line with docfront conventions (kebab-case filenames, frontmatter fields, etc.).
+> - **Migrate existing skills to `docs/`** — if the project stores internal knowledge as agent skills, ask the agent to move that content into `docs/`.
 >
 > Just ask your agent and it will be done.
