@@ -90,7 +90,7 @@ If `AGENTS.md` (or an equivalent top-level agent instructions file) exists, add 
 
 _**Note**: Adapt the commands to the project's package manager (see the [installation reference](installation.md) for the full command table)._
 
-> ## Seek Documentation and Skills
+> ## Docront - Seek Documentation and Skills
 >
 > **Before any investigation or code exploration**, run `npm run docfront` to list the documentation index. This is mandatory for every task — do not skip it. Browse relevant subdirectories (`npm run docfront -- --dir topic-a --dir topic-b/sub-topic-c`) or list everything (`npm run docfront -- --recursive`).
 >

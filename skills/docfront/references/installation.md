@@ -63,7 +63,7 @@ If the project has an `AGENTS.md` (or equivalent top-level agent instructions fi
 Section to add:
 
 ```markdown
-## Seek Documentation and Skills
+## Docront - Seek Documentation and Skills
 
 **Before any investigation or code exploration**, run `npm run docfront` to list the documentation index. This is mandatory for every task — do not skip it. Browse relevant subdirectories (`npm run docfront -- --dir topic-a --dir topic-b/sub-topic-c`) or list everything (`npm run docfront -- --recursive`).
 
