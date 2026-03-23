@@ -4,7 +4,7 @@ description: "Conventions for writing, organizing, and browsing documentation in
 license: CC0 1.0
 metadata:
   author: Paleo
-  version: "0.3.1"
+  version: "0.3.2"
   repository: https://github.com/paleo/docfront
 ---
 
