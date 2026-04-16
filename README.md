@@ -31,7 +31,7 @@ Use your docfront skill. Install docfront CLI in this project.
 ```markdown
 ---
 title: Your Title Here
-summary: A one-sentence description of what this document covers.
+summary: A short description of what this document covers.
 read_when:
   - first situation when this document is useful
   - second situation
@@ -45,7 +45,7 @@ read_when:
 | Field | Required | Description |
 | --- | --- | --- |
 | `title` | Yes | Display name shown in listings. |
-| `summary` | Recommended | One-sentence description. |
+| `summary` | Recommended | Short description. |
 | `read_when` | Recommended | When to consult this document. |
 
 ## CLI
