@@ -11,7 +11,7 @@ export interface Metadata {
  */
 export function extractMetadata(content: string): Metadata {
   if (!content.startsWith("---")) {
-    return { title: undefined, summary: undefined, readWhen: [], error: "Missing frontmatter" };
+    return { title: undefined, summary: undefined, readWhen: [], error: undefined };
   }
 
   const closingIndex = content.indexOf("\n---", 3);
@@ -69,4 +69,42 @@ export function stripFrontmatter(content: string): string {
   const closingIndex = content.indexOf("\n---", 3);
   if (closingIndex === -1) return content;
   return content.slice(closingIndex + 4).replace(/^\n+/, "");
+}
+
+export function extractFallbackTitle(content: string): string | undefined {
+  const body = stripFrontmatter(content);
+  const lines = body.split("\n");
+
+  let inFence = false;
+  let fenceChar = "";
+  let fenceLen = 0;
+
+  for (const line of lines) {
+    if (inFence) {
+      const trimmed = line.trim();
+      if (
+        trimmed.length >= fenceLen &&
+        [...new Set(trimmed)].length === 1 &&
+        trimmed[0] === fenceChar
+      ) {
+        inFence = false;
+      }
+      continue;
+    }
+
+    const fenceMatch = line.match(/^(`{3,}|~{3,})/);
+    if (fenceMatch) {
+      inFence = true;
+      fenceChar = fenceMatch[1][0];
+      fenceLen = fenceMatch[1].length;
+      continue;
+    }
+
+    const headingMatch = line.match(/^# (.+)/);
+    if (headingMatch) {
+      return headingMatch[1].trim();
+    }
+  }
+
+  return undefined;
 }

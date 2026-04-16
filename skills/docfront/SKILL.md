@@ -4,7 +4,7 @@ description: "Conventions for writing, organizing, and browsing documentation in
 license: CC0 1.0
 metadata:
   author: Paleo
-  version: "0.3.3"
+  version: "0.4.0"
   repository: https://github.com/paleo/docfront
 ---
 
@@ -49,13 +49,13 @@ docfront --check                                  # validate all files
 
 ## YAML Frontmatter
 
-Every `.md` file **must** start with a YAML frontmatter block with these fields:
+`.md` files can start with a YAML frontmatter block. Add it when it adds value — especially when the filename or heading alone is not explicit enough. It is not required; when frontmatter is absent, the CLI falls back to the first `# heading` in the document body for the title. Fields:
 
 | Field | Required | Description |
 | --- | --- | --- |
-| `title` | Yes | A human-readable display name shown in listings. |
-| `summary` | Recommended | One concise sentence. If the title already makes the purpose obvious, omit the summary to avoid redundancy. |
-| `read_when` | Recommended | A YAML list of short, action-oriented hints. Each hint completes: *"Read this document when you are…"* |
+| `title` | No | A human-readable display name shown in listings. Falls back to the first `# heading` when absent. |
+| `summary` | No | One concise sentence. If the title already makes the purpose obvious, omit the summary to avoid redundancy. |
+| `read_when` | No | A YAML list of short, action-oriented hints. Each hint completes: *"Read this document when you are…"* |
 
 ## Document Body
 

@@ -1,6 +1,6 @@
 import { type Dirent, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { extractMetadata, stripFrontmatter } from "./parser.js";
+import { extractFallbackTitle, extractMetadata, stripFrontmatter } from "./parser.js";
 
 const SHELL_SAFE_NAME = /^[\w.-]+$/;
 function validateName(name: string): string | undefined {
@@ -58,9 +58,17 @@ export function listDirectory(dirPath: string): DirectoryListing {
 
   const files: FileEntry[] = mdFiles.map((name) => {
     const content = readFileSync(join(dirPath, name), "utf-8");
-    const { title, summary, readWhen, error } = extractMetadata(content);
+    const meta = extractMetadata(content);
+    const title = meta.title ?? extractFallbackTitle(content);
     const nameError = validateName(name);
-    return { name, title, summary, readWhen, error, nameError };
+    return {
+      name,
+      title,
+      summary: meta.summary,
+      readWhen: meta.readWhen,
+      error: meta.error,
+      nameError,
+    };
   });
 
   return { subdirs, files, subdirWarnings };
@@ -238,8 +246,10 @@ export function checkAll(dirPath: string, relDir: string): CheckIssue[] {
     } else if (entry.name.endsWith(".md") && !shouldSkipFile(entry.name)) {
       if (nameWarning) issues.push({ path: rel, message: nameWarning });
       const content = readFileSync(join(dirPath, entry.name), "utf-8");
-      const { error } = extractMetadata(content);
-      if (error) issues.push({ path: rel, message: error });
+      const meta = extractMetadata(content);
+      if (meta.error) issues.push({ path: rel, message: meta.error });
+      const title = meta.title ?? extractFallbackTitle(content);
+      if (!title) issues.push({ path: rel, message: "Missing title" });
     }
   }
 
