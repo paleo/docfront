@@ -32,9 +32,9 @@
     "prepublishOnly": "npm run check"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.6",
+    "@biomejs/biome": "^2.4.12",
     "@types/node": "^24.1.0",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.4"
   }
 }
