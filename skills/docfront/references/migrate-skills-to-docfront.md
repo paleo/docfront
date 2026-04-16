@@ -52,7 +52,7 @@ For each skill, determine whether it is:
 Rules for the layout:
 
 - Every file and directory name is **lowercase with dashes**.
-- Every `.md` file should have YAML frontmatter with `title`, `summary`, and `read_when` (recommended; files without frontmatter fall back to the first `# heading` for the title).
+- Add YAML frontmatter when it adds value — especially when the filename or heading alone is not explicit enough. Files without frontmatter are valid; the CLI falls back to the first `# heading` for the title. Only include fields that are useful: omit `summary` if the title is self-explanatory, omit `read_when` if the document's scope is obvious.
 - `read_when` is a YAML list of short action-oriented hints telling the agent when to read the document.
 - Reference files from skills become standalone documents with their own frontmatter.
 - Propose subdirectories based on content domains (e.g., `docs/backend/`, `docs/frontend/`).
@@ -73,7 +73,7 @@ Delegate the conversion work using subagents (the Task tool), **one instance per
 2. **Decides on the approach** — depending on complexity:
    - **Move and edit**: Move files to their target paths in `docs/`, rename to kebab-case, then edit in place to add/replace YAML frontmatter and make content edits.
    - **Rewrite**: When the source is too tangled to edit cleanly, write the target file(s) from scratch.
-3. **Adds proper frontmatter** to every target file (`title`, `summary`, `read_when`).
+3. **Adds frontmatter** to target files when it adds value — `title` when the heading needs a better display name, `summary` when the purpose isn't obvious from the title, `read_when` when the document's scope needs clarification.
 4. **Deletes the original skill directory** after all its files have been migrated.
 
 You must provide each subagent with:

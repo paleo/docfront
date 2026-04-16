@@ -40,7 +40,7 @@ Entry point: `bin/docfront.mjs` → imports `dist/cli.js` → calls `main()` →
 
 ## Frontmatter Contract
 
-A YAML frontmatter block (`---` delimiters) is optional but recommended. The parser in `src/parser.ts` is hand-rolled (no YAML library):
+A YAML frontmatter block (`---` delimiters) is optional. The parser in `src/parser.ts` is hand-rolled (no YAML library):
 
 - Finds the closing `\n---` after the opening `---`.
 - Extracts `title` (string), `summary` (string), `read_when` (list of `- item` entries).

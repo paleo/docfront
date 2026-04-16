@@ -49,7 +49,7 @@ docfront --check                                  # validate all files
 
 ## YAML Frontmatter
 
-Every `.md` file should start with a YAML frontmatter block (recommended but not required). When frontmatter is absent, the CLI falls back to the first `# heading` in the document body for the title. Fields:
+`.md` files can start with a YAML frontmatter block. Add it when it adds value — especially when the filename or heading alone is not explicit enough. It is not required; when frontmatter is absent, the CLI falls back to the first `# heading` in the document body for the title. Fields:
 
 | Field | Required | Description |
 | --- | --- | --- |
