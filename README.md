@@ -26,7 +26,7 @@ Use your docfront skill. Install docfront CLI in this project.
 
 1. Uses a `docs/` directory at your project root.
 2. All files and directories are preferably named in **kebab-case**.
-3. Every `.md` file starts with YAML frontmatter:
+3. Every `.md` file ideally starts with YAML frontmatter (recommended but optional):
 
 ```markdown
 ---
@@ -44,7 +44,7 @@ read_when:
 
 | Field | Required | Description |
 | --- | --- | --- |
-| `title` | Yes | Display name shown in listings. |
+| `title` | No | Display name shown in listings. Falls back to the first `# heading` in the document body when absent. |
 | `summary` | Recommended | Short description. |
 | `read_when` | Recommended | When to consult this document. |
 

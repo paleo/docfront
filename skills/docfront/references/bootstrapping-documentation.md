@@ -36,7 +36,7 @@ Present findings and the proposed doc layout:
 Create the `docs/` directory if it does not already exist. Follow docfront conventions:
 
 - Use kebab-case file names, shell-safe.
-- Start each file with YAML frontmatter (`title`, optionally `summary` and `read_when`).
+- Start each file with YAML frontmatter (`title`, optionally `summary` and `read_when`). Frontmatter is recommended but not required — files without it will use the first `# heading` as their title.
 - Keep content brief and specific to the project — no generic filler.
 
 After writing, run `docfront --check` to verify all files pass validation.

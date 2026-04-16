@@ -41,7 +41,7 @@ Apply kebab-case renaming to all non-compliant files and directories. Rename dir
 
 For each `.md` file (except `CHANGELOG*.md`):
 
-- **No frontmatter exists**: Add a complete frontmatter block with `title`, `summary`, and `read_when`. Read the full file content to derive appropriate values.
+- **No frontmatter exists**: Adding a frontmatter block with `title`, `summary`, and `read_when` is recommended (read the full file content to derive appropriate values). Files without frontmatter are still valid — the CLI falls back to the first `# heading` for the title.
 - **Partial frontmatter exists**: Merge missing fields into the existing frontmatter. Preserve all existing properties — do not remove or overwrite them. Only add `title`, `summary`, or `read_when` if they are absent.
 - **Complete frontmatter exists**: Leave it unchanged.
 

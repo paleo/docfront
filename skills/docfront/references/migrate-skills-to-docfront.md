@@ -52,7 +52,7 @@ For each skill, determine whether it is:
 Rules for the layout:
 
 - Every file and directory name is **lowercase with dashes**.
-- Every `.md` file has YAML frontmatter with `title`, `summary`, and `read_when`.
+- Every `.md` file should have YAML frontmatter with `title`, `summary`, and `read_when` (recommended; files without frontmatter fall back to the first `# heading` for the title).
 - `read_when` is a YAML list of short action-oriented hints telling the agent when to read the document.
 - Reference files from skills become standalone documents with their own frontmatter.
 - Propose subdirectories based on content domains (e.g., `docs/backend/`, `docs/frontend/`).

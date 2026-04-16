@@ -2,6 +2,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { main } from "../src/cli.js";
+import { extractFallbackTitle } from "../src/parser.js";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
@@ -12,6 +13,7 @@ const fixtures = {
   subdirsOnly: resolve(__dirname, "fixtures/subdirs-only"),
   nested: resolve(__dirname, "fixtures/nested"),
   badNames: resolve(__dirname, "fixtures/bad-names"),
+  noFrontmatter: resolve(__dirname, "fixtures/no-frontmatter"),
 };
 
 function run(args: string[], fixtureDir: string) {
@@ -156,9 +158,10 @@ describe("--read combined with other flags", () => {
 });
 
 describe("error fixtures", () => {
-  it("shows missing frontmatter warning", () => {
+  it("shows missing-frontmatter.md without warning", () => {
     const { stdout } = run([], fixtures.errors);
-    expect(stdout).toContain("⚠ Missing frontmatter");
+    expect(stdout).toContain("missing-frontmatter.md");
+    expect(stdout).not.toContain("⚠ Missing frontmatter");
   });
 
   it("shows unterminated frontmatter warning", () => {
@@ -265,7 +268,7 @@ describe("--check", () => {
   it("reports frontmatter issues", () => {
     const { code, stdout } = run(["--check"], fixtures.errors);
     expect(code).toBe(1);
-    expect(stdout).toContain("Missing frontmatter");
+    expect(stdout).not.toContain("Missing frontmatter");
     expect(stdout).toContain("Unterminated frontmatter");
     expect(stdout).not.toContain("Missing 'summary'");
   });
@@ -285,5 +288,73 @@ describe("CHANGELOG file exclusion", () => {
   it("does not surface CHANGELOG.md in --check", () => {
     const { stdout } = run(["--check"], fixtures.basic);
     expect(stdout).not.toContain("CHANGELOG");
+  });
+});
+
+describe("no-frontmatter fixture", () => {
+  it("shows heading-first.md with its heading as title", () => {
+    const { stdout } = run([], fixtures.noFrontmatter);
+    expect(stdout).toContain("My Title");
+  });
+
+  it("shows prelude.md with its heading as title", () => {
+    const { stdout } = run([], fixtures.noFrontmatter);
+    expect(stdout).toContain("Actual Title");
+  });
+
+  it("shows code-block-trap.md with the real title, not the one inside the code block", () => {
+    const { stdout } = run([], fixtures.noFrontmatter);
+    expect(stdout).toContain("Real Title");
+    const lines = stdout.split("\n");
+    const trapLine = lines.find((l: string) => l.includes("code-block-trap.md"));
+    expect(trapLine).not.toContain("not a title");
+  });
+
+  it("shows no-heading.md without a title and without a warning", () => {
+    const { stdout } = run([], fixtures.noFrontmatter);
+    expect(stdout).toContain("no-heading.md");
+    const lines = stdout.split("\n");
+    const noHeadingLine = lines.findIndex((l: string) => l.includes("no-heading.md"));
+    expect(noHeadingLine).toBeGreaterThan(-1);
+    const nextLine = lines[noHeadingLine + 1];
+    expect(nextLine).not.toContain("⚠");
+  });
+
+  it("--check warns about missing title on no-heading.md", () => {
+    const { code, stdout } = run(["--check"], fixtures.noFrontmatter);
+    expect(code).toBe(1);
+    expect(stdout).toContain("no-heading.md");
+    expect(stdout).toContain("Missing title");
+  });
+});
+
+describe("extractFallbackTitle", () => {
+  it("returns the heading from a simple document", () => {
+    expect(extractFallbackTitle("# Simple Title\n\nBody text")).toBe("Simple Title");
+  });
+
+  it("returns the heading when preceded by a text prelude", () => {
+    expect(extractFallbackTitle("Some text\n\n# Heading After Prelude\n\nBody")).toBe(
+      "Heading After Prelude",
+    );
+  });
+
+  it("skips headings inside backtick fenced code blocks", () => {
+    const content = "```bash\n# not a title\n```\n\n# Real Title";
+    expect(extractFallbackTitle(content)).toBe("Real Title");
+  });
+
+  it("skips headings inside 4-backtick fenced code blocks", () => {
+    const content = "````\n# not a title\n````\n\n# Real Title";
+    expect(extractFallbackTitle(content)).toBe("Real Title");
+  });
+
+  it("skips headings inside tilde fenced code blocks", () => {
+    const content = "~~~\n# not a title\n~~~\n\n# Real Title";
+    expect(extractFallbackTitle(content)).toBe("Real Title");
+  });
+
+  it("returns undefined when there is no heading", () => {
+    expect(extractFallbackTitle("Just some text\nwithout any heading")).toBeUndefined();
   });
 });

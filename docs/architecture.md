@@ -40,14 +40,14 @@ Entry point: `bin/docfront.mjs` → imports `dist/cli.js` → calls `main()` →
 
 ## Frontmatter Contract
 
-Every `.md` file must start with a YAML frontmatter block (`---` delimiters). The parser in `src/parser.ts` is hand-rolled (no YAML library):
+A YAML frontmatter block (`---` delimiters) is optional but recommended. The parser in `src/parser.ts` is hand-rolled (no YAML library):
 
 - Finds the closing `\n---` after the opening `---`.
 - Extracts `title` (string), `summary` (string), `read_when` (list of `- item` entries).
 - Strips surrounding quotes from values.
-- Returns an `error` string for missing or unterminated frontmatter.
+- Returns an `error` string for unterminated frontmatter (opened but never closed). Missing frontmatter is not an error.
 
-`title` is required. `summary` and `read_when` are recommended but not enforced by `--check`.
+`title` is optional. When absent (no frontmatter, or frontmatter without `title`), `extractFallbackTitle` scans the document body for the first `# heading` (skipping fenced code blocks). `summary` and `read_when` are recommended but not enforced by `--check`.
 
 ## Formatting and Output
 
