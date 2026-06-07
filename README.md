@@ -1,5 +1,8 @@
 # Docfront
 
+> [!WARNING]
+> **Deprecated.** This package is replaced by [`@paleo/docmap`](https://www.npmjs.com/package/@paleo/docmap).
+
 A lightweight documentation system for AI agents and humans. Keep project docs in a `docs/` folder with YAML frontmatter, browse and read them from the terminal.
 
 Docfront is both an **npm package** (the CLI that lists, reads, and validates docs) and an **agent skill** (conventions and workflows that teach AI agents how to write, organize, and migrate documentation). You need both: the package provides the tooling, the skill provides the knowledge.
